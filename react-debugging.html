@@ -15,8 +15,6 @@
     <script type="text/babel">
     // No need to change anything ABOVE this line ^
 
-
-
     class App extends React.Component{
       constructor(props){
         super(props)
@@ -26,9 +24,10 @@
           setMood: null
         }
       }
-
       nextMood = () => {
-        if(currentMood === moods.length - 1){
+        let currentMood = 0
+        //was getting an error saying that currentMood was undefined so I declared it above, then it said moods was undefined. so I added this.state, I got it to work but it only works for one click. Afterwards clicking it again doesn't do anything and it doesn't give me errors on the browser console. At this point I'm kind of stuck.
+        if(this.currentMood === this.state.moods.length - 1){
           this.setState({ currentMood: currentMood = 0 })
         } else {
           this.setState({ currentMood: currentMood + 1 })
@@ -41,12 +40,16 @@
 
       render(){
         return(
+          //added these carrots so that everything is contained in one div/fragment (both would work I believe)
+          //line 49 onclick, something is wonky. chrome says currentMood is undefined.
+          //line 53 I added this.nextMood to call the function on clicking the button.
+          <>
             <h1>Welcome to the Mood Meter App</h1>
             <h3>Mood Options:</h3>
             <p style={{fontSize: "50px"}}>
               { this.state.moods[this.state.currentMood] }
             </p>
-            <button onClick={ }>
+            <button onClick={ this.nextMood }>
               Click Here For Next Mood Option
             </button>
             <h3>Save your mood here!</h3>
@@ -57,11 +60,12 @@
             <p style={{fontSize: "50px"}}>
               { this.state.setMood }
             </p>
+          </>
         )
       }
     }
 
-
+    
 
       // No need to change anything below this line
       const domContainer = document.querySelector('#react-container')
